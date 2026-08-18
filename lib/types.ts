@@ -1,6 +1,14 @@
 export type Role = 'mentor' | 'mentee'
 export type ApplicationStatus = 'pending' | 'viewed' | 'accepted' | 'rejected'
 export type ProjectRequestStatus = 'pending' | 'accepted' | 'rejected'
+export type AccountStatus = 'pending' | 'active' | 'paused' | 'suspended' | 'deactivated'
+export type DocType =
+  | 'terms_of_service'
+  | 'privacy_policy'
+  | 'code_of_conduct'
+  | 'mentor_agreement'
+  | 'mentor_nda'
+  | 'marketing_consent'
 
 export interface Profile {
   id: string
@@ -8,6 +16,10 @@ export interface Profile {
   email: string
   phone: string | null
   role: Role
+  account_status: AccountStatus
+  rejection_reason: string | null
+  reviewed_by: string | null
+  reviewed_at: string | null
   specialization: string | null
   motivation: string | null
   linkedin_url: string | null
@@ -16,6 +28,28 @@ export interface Profile {
   photo_url: string | null
   created_at: string
   updated_at: string
+}
+
+export interface PlatformDocument {
+  id: string
+  doc_type: DocType
+  version: string
+  title: string
+  body_url: string | null
+  body_text: string | null
+  applies_to_role: 'mentor' | 'mentee' | 'all'
+  is_active: boolean
+  created_at: string
+}
+
+export interface UserConsent {
+  id: string
+  user_id: string
+  document_id: string
+  doc_type: DocType
+  version: string
+  method: string
+  signed_at: string
 }
 
 export interface ResearchOpportunity {
